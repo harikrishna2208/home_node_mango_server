@@ -6,13 +6,13 @@ const int = (val: string | undefined, num: number): number =>
 
 interface DatabaseEnvImport {
   port: number;
-  mangoUrl: String;
+  mangoUrl: string;
   nodeEnvironment: string;
 }
 
-// TODO: create a Booleand, integer and String unit Function for this env
+// TODO: create a Boolean, integer and String unit Function for this env
 export const dotenv: DatabaseEnvImport = {
   port: int(process.env.port, 4000),
-  mangoUrl: "asdassdll",
-  nodeEnvironment: "development",
+  mangoUrl: process.env.mongoURL ?? "mongodb://localhost/27017",
+  nodeEnvironment: process.env.NODE_ENV ?? "development",
 };
