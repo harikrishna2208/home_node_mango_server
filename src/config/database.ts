@@ -7,7 +7,7 @@ const connectDB = async (): Promise<void> => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as ConnectOptions);
-    console.log("Connected to MongoDB", mangoConnect);
+    console.log("Connected to MongoDB");
   } catch (err) {
     console.error("Error connecting to MongoDB", err);
   }

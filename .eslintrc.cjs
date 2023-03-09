@@ -1,4 +1,4 @@
-modul.exports = {
+module.exports = {
   env: { es2022: true, node: true },
   extends: ["airbnb-base", "plugin:node/recommended"],
   parserOptions: { sourceType: "module", ecmaVersion: 13 },
