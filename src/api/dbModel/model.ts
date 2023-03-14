@@ -20,7 +20,6 @@ const routineSchema = new Schema<IRoutine>({
     },
     time: {
       type: Date,
-      required: "time is required",
     },
   },
   bath: {
