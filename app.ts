@@ -3,19 +3,17 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import connectDB from "./src/config/database.js";
+import router from "./src/api/routes/index.js";
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(cors());
-
-// Routes
-app.get("/", (req: Request, res: Response) => {
-  return res.send("Hello, World!");
-});
+app.use(cors({ origin: "*" }));
+app.use(express.json());
+app.use("/", router);
 
 // Error handling middleware
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

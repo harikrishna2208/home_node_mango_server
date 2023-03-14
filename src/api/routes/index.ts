@@ -1,10 +1,25 @@
-import { Router, Request, Response } from "express";
+import express from "express";
+import RoutineController from "./../modules/self_care/selfCareController.js";
 
-const router = Router();
+const router = express.Router();
 
-router.get("/", (req: Request, res: Response) => {
-  console.log(req.body, "body");
-  return res.json("exampels");
-});
+const routineController = new RoutineController();
+
+router.post(
+  "/routines",
+  routineController.createRoutine.bind(routineController)
+);
+router.get(
+  "/routines/:id",
+  routineController.getRoutineById.bind(routineController)
+);
+router.patch(
+  "/routines/:id",
+  routineController.updateRoutine.bind(routineController)
+);
+router.delete(
+  "/routines/:id",
+  routineController.deleteRoutine.bind(routineController)
+);
 
 export default router;
