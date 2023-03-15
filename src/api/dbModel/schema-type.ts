@@ -35,7 +35,7 @@ export interface IRoutine extends Document {
     took_bath: Boolean;
     time: Date | null;
   };
-  sleep: { sleep_time: Date; sleep_time_extended: Date };
+  sleep: { sleep_time: Date; sleep_time_extended: null | Date };
   books: {
     read: Boolean;
     book_id: mongoose.Types.ObjectId | null;

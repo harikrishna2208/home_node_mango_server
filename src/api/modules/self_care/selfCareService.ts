@@ -8,8 +8,9 @@ export class RoutineService {
     this.repository = new SelfCareRepository();
   }
 
-  async createRoutine(routineData: IRoutine): Promise<void> {
-    await this.repository.create(routineData);
+  async createRoutine(routineData: IRoutine): Promise<IRoutine> {
+    const savedRoutine = await this.repository.create(routineData);
+    return savedRoutine;
   }
 
   async getRoutineById(routineId: string): Promise<IRoutine | null> {

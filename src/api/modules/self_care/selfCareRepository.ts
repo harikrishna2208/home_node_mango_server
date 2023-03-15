@@ -4,7 +4,7 @@ import { IRoutine } from "../../dbModel/schema-type.js";
 export default class SelfCareRepository {
   public async create(data: any): Promise<IRoutine> {
     const myData: IRoutine = new routineCollection(data);
-    return await myData.save();
+    return myData;
   }
 
   public async findAll(): Promise<IRoutine[]> {

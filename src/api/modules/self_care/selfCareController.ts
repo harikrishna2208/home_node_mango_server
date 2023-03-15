@@ -10,8 +10,9 @@ export default class RoutineController {
     try {
       const routineData = req.body;
       const routineService = new RoutineService();
-      await routineService.createRoutine(routineData);
-      res.sendStatus(201);
+      const saveRoutineData = await routineService.createRoutine(routineData);
+      console.log(saveRoutineData);
+      res.sendStatus(201).json(saveRoutineData);
     } catch (error) {
       console.error(error);
       res.sendStatus(500);
