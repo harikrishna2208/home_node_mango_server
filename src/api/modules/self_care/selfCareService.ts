@@ -27,4 +27,9 @@ export class RoutineService {
   async deleteRoutine(routineId: string): Promise<void> {
     await this.repository.delete(routineId);
   }
+
+  async routineDataforDates(fromDate?: Object): Promise<Array<IRoutine>> {
+    const allRoutines = await this.repository.allRoutineBasedOnDate(fromDate);
+    return allRoutines;
+  }
 }

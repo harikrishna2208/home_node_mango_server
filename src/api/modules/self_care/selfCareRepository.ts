@@ -22,4 +22,10 @@ export default class SelfCareRepository {
   public async delete(id: string): Promise<IRoutine | null> {
     return await routineCollection.findByIdAndDelete(id);
   }
+
+  async allRoutineBasedOnDate(fromData?: Object): Promise<Array<IRoutine>> {
+    const allRoutine = await routineCollection.find();
+    console.log(fromData);
+    return allRoutine;
+  }
 }
