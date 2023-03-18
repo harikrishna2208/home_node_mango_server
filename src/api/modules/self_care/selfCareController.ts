@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IRoutine } from "../../dbModel/schema-type.js";
 import { RoutineService } from "./selfCareService.js";
 import { appResponse } from "../../utils/app_response.js";
+import { IGetRoutineRequest } from "./self_care.js";
 
 export default class RoutineController {
   private routineService: RoutineService;
@@ -20,7 +21,7 @@ export default class RoutineController {
         routineData
       );
       console.log(saveRoutineData, "save Routine Data");
-      if (saveRoutineData?._id == null) {
+      if (Array.isArray(saveRoutineData) && saveRoutineData.length === 0) {
         return appResponse(res, 409, "FAILURE");
       }
       return appResponse(res, 201, "success");
@@ -80,9 +81,24 @@ export default class RoutineController {
   }
   async allRoutine(req: Request, res: Response): Promise<void> {
     try {
-      console.log(req, "request for the Object");
-      await this.routineService.routineDataforDates({});
-      return appResponse(res, 200, "SUCESS");
+      // check whether incoming contains two element in date variable and option variable are present compulsorily
+      const dateFilterForDb: IGetRoutineRequest | null =
+        req.params?.date &&
+        req.params.date.length === 2 &&
+        typeof req.params.date[0] === "string" &&
+        typeof req.params.date[1] === "string" &&
+        req.params?.option
+          ? {
+              date: [req.params.date[0], req.params.date[1]],
+              option: req.params.option,
+            }
+          : null;
+
+      const allDataFromMongodb = await this.routineService.routineDataforDates(
+        dateFilterForDb
+      );
+
+      return appResponse<Object>(res, 200, "SUCESS", { allDataFromMongodb });
     } catch (error) {
       console.error(error);
       return appResponse(res, 500, "FAILURE");

@@ -22,4 +22,9 @@ router.delete(
   routineController.deleteRoutine.bind(routineController)
 );
 
+router.get(
+  "/allroutines",
+  routineController.allRoutine.bind(routineController)
+);
+
 export default router;

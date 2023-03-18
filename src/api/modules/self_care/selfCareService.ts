@@ -1,5 +1,7 @@
 import SelfCareRepository from "./selfCareRepository.js";
 import { IRoutine } from "../../dbModel/schema-type.js";
+import { IGetRoutineRequest } from "./self_care.js";
+import { todayDate } from "../../utils/date.js";
 
 export class RoutineService {
   private readonly repository: SelfCareRepository;
@@ -8,7 +10,11 @@ export class RoutineService {
     this.repository = new SelfCareRepository();
   }
 
-  async createRoutine(routineData: IRoutine): Promise<IRoutine> {
+  async createRoutine(routineData: IRoutine): Promise<IRoutine | []> {
+    // console.log(routineData);
+    const checkDate = todayDate();
+    console.log(checkDate, "check Date");
+    routineData.date = new Date(checkDate);
     const savedRoutine = await this.repository.create(routineData);
     return savedRoutine;
   }
@@ -28,7 +34,9 @@ export class RoutineService {
     await this.repository.delete(routineId);
   }
 
-  async routineDataforDates(fromDate?: Object): Promise<Array<IRoutine>> {
+  async routineDataforDates(
+    fromDate: IGetRoutineRequest | null
+  ): Promise<Array<IRoutine>> {
     const allRoutines = await this.repository.allRoutineBasedOnDate(fromDate);
     return allRoutines;
   }

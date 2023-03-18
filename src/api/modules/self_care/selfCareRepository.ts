@@ -1,10 +1,17 @@
 import { routineCollection } from "./../../dbModel/model.js";
 import { IRoutine } from "../../dbModel/schema-type.js";
+import { IGetRoutineRequest } from "./self_care.js";
 
 export default class SelfCareRepository {
-  public async create(data: any): Promise<IRoutine> {
-    const myData: IRoutine = new routineCollection(data);
-    return myData;
+  public async create(data: any): Promise<IRoutine | []> {
+    const filter = {
+      // date: todayDate(),
+    };
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+    const createOrUpdateRoutine: IRoutine | [] =
+      (await routineCollection.findOneAndUpdate(filter, data, options)) ?? [];
+    return createOrUpdateRoutine;
   }
 
   public async findAll(): Promise<IRoutine[]> {
@@ -23,9 +30,35 @@ export default class SelfCareRepository {
     return await routineCollection.findByIdAndDelete(id);
   }
 
-  async allRoutineBasedOnDate(fromData?: Object): Promise<Array<IRoutine>> {
-    const allRoutine = await routineCollection.find();
-    console.log(fromData);
+  checkGetOptionFromFilter(
+    filterFromRequest: IGetRoutineRequest | null
+  ): Record<string, any> | null {
+    if (filterFromRequest == null) {
+      return null;
+    }
+    return {
+      date: {
+        $gte: filterFromRequest.date[0],
+        $lte: filterFromRequest.date[1],
+      },
+    };
+  }
+
+  async allRoutineBasedOnDate(
+    getFilterFromDb: IGetRoutineRequest | null
+  ): Promise<Array<IRoutine>> {
+    console.log(getFilterFromDb, "gett");
+    const filter = this.checkGetOptionFromFilter(getFilterFromDb) || {};
+    const projectionOption =
+      getFilterFromDb?.option === "All" ||
+      filter == null ||
+      Object.keys(filter).length === 0
+        ? null
+        : { [`${getFilterFromDb?.option}`]: 1 };
+    const allRoutine: Array<IRoutine> = await routineCollection.find(
+      filter,
+      projectionOption
+    );
     return allRoutine;
   }
 }

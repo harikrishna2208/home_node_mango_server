@@ -10,21 +10,25 @@ specifiers:
   '@typescript-eslint/parser': ^5.0.0
   body-parser: ^1.20.2
   cors: ^2.8.5
+  dayjs: ^1.11.7
   dotenv: ^16.0.3
   eslint: ^8.35.0
   eslint-config-airbnb-typescript: ^17.0.0
   eslint-plugin-import: ^2.27.5
   express: 4.18.0
   mongoose: ^7.0.0
+  relativeTime: link:dayjs/plugin/relativeTime
   ts-node: ^10.9.1
   typescript: ^4.9.5
 
 dependencies:
   body-parser: 1.20.2
   cors: 2.8.5
+  dayjs: 1.11.7
   dotenv: 16.0.3
   express: 4.18.0
   mongoose: 7.0.0
+  relativeTime: link:dayjs/plugin/relativeTime
 
 devDependencies:
   '@types/body-parser': 1.19.2
@@ -603,6 +607,10 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
     dev: true
+
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}

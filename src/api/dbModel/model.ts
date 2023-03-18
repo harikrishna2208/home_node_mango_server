@@ -10,8 +10,11 @@ const reasonAndAmountWithPersonSchema = new Schema<ReasonAndAmount>({
 const routineSchema = new Schema<IRoutine>({
   date: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
     required: true,
+  },
+  dateFormatted: {
+    type: String,
   },
   hair_wash: {
     washed_hairs: {
