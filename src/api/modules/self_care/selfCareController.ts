@@ -34,14 +34,15 @@ export default class RoutineController {
     }
   }
 
-  async getRoutineById(
-    req: Request<{ id: string }>,
+  async getRoutineByDate(
+    req: Request<{ date: string }>,
     res: Response<IRoutine | null>
   ): Promise<void> {
     try {
-      const routineId = req.params.id;
-      const routine = await this.routineService.getRoutineById(routineId);
-      return appResponse<Object>(res, 200, "SUCCESS", { routine });
+      const routineDate = req.params.date;
+      const routine: IRoutine | null =
+        await this.routineService.getRoutineByDate(routineDate);
+      return appResponse<IRoutine | null>(res, 200, "SUCCESS", routine);
     } catch (error) {
       console.error(error);
       return appResponse(res, 500, "FAILURE");
@@ -102,6 +103,18 @@ export default class RoutineController {
     } catch (error) {
       console.error(error);
       return appResponse(res, 500, "FAILURE");
+    }
+  }
+  async getAllDatesFromDb(req: Request, res: Response): Promise<void> {
+    try {
+      const allDatesFromDb = await this.routineService.getAllDatesFromDb();
+      if (allDatesFromDb == null) {
+        return appResponse(res, 409, "FAILURE");
+      }
+      console.log(allDatesFromDb, "check the return type");
+      return appResponse<Object>(res, 200, "SUCCESS", { allDatesFromDb });
+    } catch (error) {
+      console.log(error);
     }
   }
 }

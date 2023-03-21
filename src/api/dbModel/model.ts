@@ -15,6 +15,7 @@ const routineSchema = new Schema<IRoutine>({
   },
   dateFormatted: {
     type: String,
+    required: true,
   },
   hair_wash: {
     washed_hairs: {

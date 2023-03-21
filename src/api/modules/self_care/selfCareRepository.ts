@@ -1,11 +1,12 @@
 import { routineCollection } from "./../../dbModel/model.js";
 import { IRoutine } from "../../dbModel/schema-type.js";
 import { IGetRoutineRequest } from "./self_care.js";
+import { todayDate } from "../../utils/date.js";
 
 export default class SelfCareRepository {
   public async create(data: any): Promise<IRoutine | []> {
     const filter = {
-      // date: todayDate(),
+      dateFormatted: todayDate(),
     };
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
@@ -18,8 +19,8 @@ export default class SelfCareRepository {
     return await routineCollection.find();
   }
 
-  public async getById(id: string): Promise<IRoutine | null> {
-    return await routineCollection.findById(id);
+  public async getByDate(dateFormatted: string): Promise<IRoutine | null> {
+    return await routineCollection.findOne({ dateFormatted });
   }
 
   public async update(id: string, data: any): Promise<IRoutine | null> {
@@ -28,6 +29,15 @@ export default class SelfCareRepository {
 
   public async delete(id: string): Promise<IRoutine | null> {
     return await routineCollection.findByIdAndDelete(id);
+  }
+
+  public async getAllDatesFromTheDb(): Promise<String[] | null> {
+    const alldbDates = await routineCollection
+      .find()
+      .sort({ date: 1 })
+      .select("dateFormatted -_id");
+    console.log(alldbDates);
+    return alldbDates.map((eachDate) => eachDate.dateFormatted);
   }
 
   checkGetOptionFromFilter(
@@ -48,13 +58,16 @@ export default class SelfCareRepository {
     getFilterFromDb: IGetRoutineRequest | null
   ): Promise<Array<IRoutine>> {
     console.log(getFilterFromDb, "gett");
+
     const filter = this.checkGetOptionFromFilter(getFilterFromDb) || {};
+
     const projectionOption =
       getFilterFromDb?.option === "All" ||
       filter == null ||
       Object.keys(filter).length === 0
         ? null
         : { [`${getFilterFromDb?.option}`]: 1 };
+
     const allRoutine: Array<IRoutine> = await routineCollection.find(
       filter,
       projectionOption

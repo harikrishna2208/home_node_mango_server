@@ -27,6 +27,7 @@ export interface IMoney_lend_collection extends Document {
 
 export interface IRoutine extends Document {
   date: Date;
+  dateFormatted: String;
   hair_wash: {
     washed_hairs: Boolean;
     time: Date | null;

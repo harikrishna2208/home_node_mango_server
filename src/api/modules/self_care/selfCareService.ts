@@ -11,16 +11,15 @@ export class RoutineService {
   }
 
   async createRoutine(routineData: IRoutine): Promise<IRoutine | []> {
-    // console.log(routineData);
-    const checkDate = todayDate();
-    console.log(checkDate, "check Date");
-    routineData.date = new Date(checkDate);
+    if (routineData?.dateFormatted == null) {
+      routineData.dateFormatted = todayDate();
+    }
     const savedRoutine = await this.repository.create(routineData);
     return savedRoutine;
   }
 
-  async getRoutineById(routineId: string): Promise<IRoutine | null> {
-    return this.repository.getById(routineId);
+  async getRoutineByDate(formattedDate: string): Promise<IRoutine | null> {
+    return await this.repository.getByDate(formattedDate);
   }
 
   async updateRoutine(
@@ -39,5 +38,9 @@ export class RoutineService {
   ): Promise<Array<IRoutine>> {
     const allRoutines = await this.repository.allRoutineBasedOnDate(fromDate);
     return allRoutines;
+  }
+  async getAllDatesFromDb(): Promise<String[] | null> {
+    const allDatesFromDb = await this.repository.getAllDatesFromTheDb();
+    return allDatesFromDb;
   }
 }
