@@ -18,42 +18,45 @@ const routineSchema = new Schema<IRoutine>({
     required: true,
   },
   hair_wash: {
-    washed_hairs: {
-      type: Boolean,
-      default: false,
+    required: true,
+    type: {
+      washed_hairs: {
+        type: Boolean,
+        default: false,
+      },
+      time: { type: Date },
     },
-    time: { type: Date },
   },
   bath: {
-    took_bath: { type: Boolean, default: false },
-    time: { type: Date, default: Date.now },
+    required: true,
+    type: {
+      took_bath: { type: Boolean, default: false },
+      time: { type: Date },
+    },
   },
   sleep: {
-    sleep_time: { type: Schema.Types.Mixed },
-    sleep_time_extended: { type: Schema.Types.Mixed },
+    required: true,
+    type: {
+      sleep_time: { type: Date },
+      sleep_time_extended: { type: Boolean },
+    },
+  },
+  books: {
+    required: true,
+    type: {
+      page_count: { type: Number, default: 0 },
+      read: { type: Boolean, default: false },
+      book_id: { type: Schema.Types.ObjectId },
+    },
   },
 });
-
-// Define a pre-save middleware function to convert the date to "Asia/Kolkata" timezone
-// routineSchema.pre("save", function (next) {
-//   if (this.date) {
-//     this.date = new Date(
-//       this.date.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
-//     );
-//   }
-//   next();
-// });
-
-//
 // const database = new Schema<>({
-//
 //   money: {
 //     date: { type: Date, default: Date.now },
 //     borrow: reasonAndAmountWithPersonSchema,
 //     lend: reasonAndAmountWithPersonSchema,
 //     spent: { reason: { type: String }, amount: { type: Number } },
 //   },
-//   sleep: { sleep_time: { type: Date }, sleep_time_extended: { type: Date } },
 // });
 
 export const routineCollection: Model<IRoutine> = model<IRoutine>(

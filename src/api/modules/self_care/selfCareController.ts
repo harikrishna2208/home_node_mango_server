@@ -80,6 +80,7 @@ export default class RoutineController {
       return appResponse(res, 500, "FAILURE");
     }
   }
+
   async allRoutine(req: Request, res: Response): Promise<void> {
     try {
       // check whether incoming contains two element in date variable and option variable are present compulsorily

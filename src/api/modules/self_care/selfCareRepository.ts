@@ -4,12 +4,14 @@ import { IGetRoutineRequest } from "./self_care.js";
 import { todayDate } from "../../utils/date.js";
 
 export default class SelfCareRepository {
-  public async create(data: any): Promise<IRoutine | []> {
+  public async create(data: IRoutine): Promise<IRoutine | []> {
     const filter = {
-      dateFormatted: todayDate(),
+      dateFormatted: data?.dateFormatted ?? todayDate(""),
     };
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
 
+    const { _id, ...dataWithIDForUpdate } = data;
+
+    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
     const createOrUpdateRoutine: IRoutine | [] =
       (await routineCollection.findOneAndUpdate(filter, data, options)) ?? [];
     return createOrUpdateRoutine;

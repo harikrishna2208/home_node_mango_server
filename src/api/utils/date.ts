@@ -6,7 +6,14 @@ import relativeTime from "dayjs/plugin/relativeTime.js";
 dayjs.extend(utc);
 dayjs.extend(relativeTime);
 
-export const todayDate = () => dayjs().local().format("DD-MM-YYYY");
+enum dateFormat {
+  "ddmmyyyy" = "DD-MM-YYYY",
+  "yyyymmdd" = "YYYY-MM-DD",
+}
+
+export const todayDate = (dateFormatType: dateFormat): string => {
+  return dayjs().local().format(dateFormat[dateFormatType]);
+};
 
 export const formatDateToString = (date: Date) => {
   return dayjs(date).local().format("DD MMMM YYYY, HH:mm:ss");

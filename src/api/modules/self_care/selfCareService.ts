@@ -11,6 +11,7 @@ export class RoutineService {
   }
 
   async createRoutine(routineData: IRoutine): Promise<IRoutine | []> {
+    console.log(routineData, "this is the data comign");
     if (routineData?.dateFormatted == null) {
       routineData.dateFormatted = todayDate();
     }

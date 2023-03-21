@@ -26,6 +26,7 @@ export interface IMoney_lend_collection extends Document {
 }
 
 export interface IRoutine extends Document {
+  _id: mongoose.Types.ObjectId;
   date: Date;
   dateFormatted: String;
   hair_wash: {
