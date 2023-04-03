@@ -1,7 +1,7 @@
 import { routineCollection } from "./../../dbModel/model.js";
 import { IRoutine } from "../../dbModel/schema-type.js";
 import { IGetRoutineRequest } from "./self_care.js";
-import { todayDate } from "../../utils/date.js";
+import { sortDateWithTime, todayDate } from "../../utils/date.js";
 
 export default class SelfCareRepository {
   public async create(data: IRoutine): Promise<IRoutine | []> {
@@ -34,13 +34,16 @@ export default class SelfCareRepository {
     return await routineCollection.findByIdAndDelete(id);
   }
 
-  public async getAllDatesFromTheDb(): Promise<String[] | null> {
+  public async getAllDatesFromTheDb(): Promise<string[] | null> {
     const alldbDates = await routineCollection
       .find()
       .sort({ date: 1 })
-      .select("dateFormatted -_id");
-    console.log(alldbDates);
-    return alldbDates.map((eachDate) => eachDate.dateFormatted);
+      .select({ dateFormatted: 1, _id: 0 });
+
+    const unsortedDates = alldbDates.map((eachDate) =>
+      eachDate.dateFormatted.toString()
+    );
+    return sortDateWithTime(unsortedDates);
   }
 
   checkGetOptionFromFilter(

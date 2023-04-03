@@ -46,10 +46,16 @@ const routineSchema = new Schema<IRoutine>({
     type: {
       page_count: { type: Number, default: 0 },
       read: { type: Boolean, default: false },
-      book_id: { type: Schema.Types.ObjectId },
+      book_id: {
+        type: Schema.Types.ObjectId,
+        required: false,
+        default: null,
+        sparse: true,
+      },
     },
   },
 });
+
 // const database = new Schema<>({
 //   money: {
 //     date: { type: Date, default: Date.now },

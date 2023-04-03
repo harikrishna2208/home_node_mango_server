@@ -17,7 +17,6 @@ export class RoutineService {
     ) {
       routineData.dateFormatted = todayDate("ddmmyyyy");
     }
-
     console.log(routineData, "this is the data comign");
     const savedRoutine = await this.repository.create(routineData);
     return savedRoutine;
@@ -46,6 +45,7 @@ export class RoutineService {
   }
   async getAllDatesFromDb(): Promise<String[] | null> {
     const allDatesFromDb = await this.repository.getAllDatesFromTheDb();
+    console.log(allDatesFromDb);
     return allDatesFromDb;
   }
 }
