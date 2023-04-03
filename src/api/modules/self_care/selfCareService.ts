@@ -11,10 +11,14 @@ export class RoutineService {
   }
 
   async createRoutine(routineData: IRoutine): Promise<IRoutine | []> {
-    console.log(routineData, "this is the data comign");
-    if (routineData?.dateFormatted == null) {
-      routineData.dateFormatted = todayDate();
+    if (
+      routineData?.dateFormatted == null ||
+      routineData?.dateFormatted === ""
+    ) {
+      routineData.dateFormatted = todayDate("ddmmyyyy");
     }
+
+    console.log(routineData, "this is the data comign");
     const savedRoutine = await this.repository.create(routineData);
     return savedRoutine;
   }

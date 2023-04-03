@@ -7,12 +7,12 @@ dayjs.extend(utc);
 dayjs.extend(relativeTime);
 
 enum dateFormat {
-  "ddmmyyyy" = "DD-MM-YYYY",
-  "yyyymmdd" = "YYYY-MM-DD",
+  ddmmyyyy = "DD-MM-YYYY",
+  yyyymmdd = "YYYY-MM-DD",
 }
 
-export const todayDate = (dateFormatType: dateFormat): string => {
-  return dayjs().local().format(dateFormat[dateFormatType]);
+export const todayDate = (dateFormatType: keyof typeof dateFormat): string => {
+  return dayjs().local().format(dateFormatType);
 };
 
 export const formatDateToString = (date: Date) => {

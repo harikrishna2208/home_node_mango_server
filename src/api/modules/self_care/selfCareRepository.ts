@@ -6,12 +6,13 @@ import { todayDate } from "../../utils/date.js";
 export default class SelfCareRepository {
   public async create(data: IRoutine): Promise<IRoutine | []> {
     const filter = {
-      dateFormatted: data?.dateFormatted ?? todayDate(""),
+      dateFormatted: data?.dateFormatted ?? todayDate("ddmmyyyy"),
     };
 
     const { _id, ...dataWithIDForUpdate } = data;
 
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
     const createOrUpdateRoutine: IRoutine | [] =
       (await routineCollection.findOneAndUpdate(filter, data, options)) ?? [];
     return createOrUpdateRoutine;
