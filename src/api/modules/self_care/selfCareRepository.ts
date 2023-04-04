@@ -43,6 +43,7 @@ export default class SelfCareRepository {
     const unsortedDates = alldbDates.map((eachDate) =>
       eachDate.dateFormatted.toString()
     );
+
     return sortDateWithTime(unsortedDates);
   }
 
@@ -74,6 +75,7 @@ export default class SelfCareRepository {
         ? null
         : { [`${getFilterFromDb?.option}`]: 1 };
 
+    console.log(projectionOption, filter, "whats the projecttion data");
     const allRoutine: Array<IRoutine> = await routineCollection.find(
       filter,
       projectionOption

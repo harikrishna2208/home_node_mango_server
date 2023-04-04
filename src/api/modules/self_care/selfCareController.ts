@@ -100,7 +100,6 @@ export default class RoutineController {
         dateFilterForDb
       );
 
-      console.log(allDataFromMongodb, "allDataFromMongDB");
       return appResponse<Object>(res, 200, "SUCESS", { allDataFromMongodb });
     } catch (error) {
       console.error(error);
@@ -113,8 +112,9 @@ export default class RoutineController {
       if (allDatesFromDb == null) {
         return appResponse(res, 409, "FAILURE");
       }
-      console.log(allDatesFromDb, "check the return type");
-      return appResponse<Object>(res, 200, "SUCCESS", { allDatesFromDb });
+      console.log(allDatesFromDb, "allData from bd");
+
+      return appResponse<Array<String>>(res, 201, "SUCCESS", allDatesFromDb);
     } catch (error) {
       console.log(error);
     }

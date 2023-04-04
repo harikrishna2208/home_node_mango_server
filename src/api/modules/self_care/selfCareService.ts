@@ -40,12 +40,12 @@ export class RoutineService {
   async routineDataforDates(
     fromDate: IGetRoutineRequest | null
   ): Promise<Array<IRoutine>> {
+    console.log(fromDate, "fromt dataaaa");
     const allRoutines = await this.repository.allRoutineBasedOnDate(fromDate);
     return allRoutines;
   }
   async getAllDatesFromDb(): Promise<String[] | null> {
     const allDatesFromDb = await this.repository.getAllDatesFromTheDb();
-    console.log(allDatesFromDb);
     return allDatesFromDb;
   }
 }
